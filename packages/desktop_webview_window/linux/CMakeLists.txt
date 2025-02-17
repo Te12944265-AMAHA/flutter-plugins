@@ -17,6 +17,8 @@ if (NOT LibSoup_FOUND)
   pkg_check_modules(LibSoup REQUIRED IMPORTED_TARGET libsoup-2.4)
 endif()
 
+pkg_check_modules(GLIB REQUIRED IMPORTED_TARGET glib-2.0)
+
 
 add_library(${PLUGIN_NAME} SHARED
         "desktop_webview_window_plugin.cc"
@@ -34,6 +36,7 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::WebKit)
+target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GLIB)
 
 # List of absolute paths to libraries that should be bundled with the plugin
 set(desktop_webview_window_bundled_libraries

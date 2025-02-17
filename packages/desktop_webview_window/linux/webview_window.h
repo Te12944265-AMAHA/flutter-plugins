@@ -9,13 +9,15 @@
 #include <gtk/gtk.h>
 #include <libsoup/soup.h>
 #include <webkit2/webkit2.h>
+#include <glib-2.0/glib.h>
 
 #include <functional>
 #include <string>
 
-typedef struct {
-    GMainLoop *loop;
-    GList *cookies;
+typedef struct
+{
+  GMainLoop *loop;
+  GList *cookies;
 } CookieData;
 
 void get_cookies_callback(WebKitCookieManager *manager, GAsyncResult *res,
@@ -23,8 +25,9 @@ void get_cookies_callback(WebKitCookieManager *manager, GAsyncResult *res,
 
 GList *get_cookies_sync(WebKitWebView *web_view);
 
-class WebviewWindow {
- public:
+class WebviewWindow
+{
+public:
   WebviewWindow(FlMethodChannel *method_channel, int64_t window_id,
                 std::function<void()> on_close_callback,
                 const std::string &title, int width, int height,
@@ -50,14 +53,14 @@ class WebviewWindow {
 
   void StopLoading();
 
-  FlValue* GetAllCookies();
+  FlValue *GetAllCookies();
 
   gboolean DecidePolicy(WebKitPolicyDecision *decision,
                         WebKitPolicyDecisionType type);
 
   void EvaluateJavaScript(const char *java_script, FlMethodCall *call);
 
- private:
+private:
   FlMethodChannel *method_channel_;
   int64_t window_id_;
   std::function<void()> on_close_callback_;
@@ -69,4 +72,4 @@ class WebviewWindow {
   GtkBox *box_ = nullptr;
 };
 
-#endif  // WEBVIEW_WINDOW_LINUX_WEBVIEW_WINDOW_H_
+#endif // WEBVIEW_WINDOW_LINUX_WEBVIEW_WINDOW_H_
